@@ -1,8 +1,5 @@
 # This is the api server code
     This uses nodes js for mysql and express for apis 
-
-<br>
-<br>
 <br>
 
 # Dependencies
@@ -10,8 +7,6 @@
         mysql2 :  3.13.0
 
 <br>
-<br>
-
 # Installation steps
 
     -  Install nodejs first
