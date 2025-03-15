@@ -2,11 +2,6 @@
     This uses nodes js for mysql and express for apis 
 <br>
 
-# Dependencies
-        express :  5.0.1
-        mysql2 :  3.13.0
-
-<br>
 # Installation steps
 
     -  Install nodejs first
@@ -18,4 +13,8 @@
 
     -  run  " node index.js "
 
-    
+<br> 
+
+
+# Database Schema
+<img src="database.png"/>
