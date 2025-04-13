@@ -11,7 +11,7 @@
     -  run " npm install "
 <br>
 
-    -  run  " node index.js "
+    -  run  " node server.js "
 
 <br> 
 
