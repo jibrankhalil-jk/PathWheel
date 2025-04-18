@@ -5,7 +5,7 @@ using UnityEngine;
 public class FollowWaypoints : MonoBehaviour {
 
     Transform goal;
-    float speed = 5.0f;
+    float speed = 3.0f;
     float accuracy = 5.0f;
     float rotSpeed = 2.0f;
     GameObject[] wps;
@@ -21,7 +21,6 @@ public class FollowWaypoints : MonoBehaviour {
         g = wpManager.GetComponent<WPManager>().graph;
         currentNode = wps[0];
 
-        // Invoke("GotoRuin", 2.0f);
     }
 
     public void GotoHeli() {
