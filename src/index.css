@@ -1,1 +1,44 @@
+@import "@flaticon/flaticon-uicons/css/all/all";
 @import "tailwindcss";
+
+
+@theme {
+  --color-primary: #02897a;
+  --color-text: #22343d;
+
+  --shadow-borderShadow: 0px 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+@layer components {
+  .primary-button {
+    @apply px-8 py-2 whitespace-nowrap font-semibold text-lg bg-[#02897A] text-white rounded-md cursor-pointer border-[#02897A] hover:bg-white border-2 hover:text-[#02897A] transition-all duration-200 active:scale-90;
+  }
+  .secondary-button {
+    @apply px-8 py-2 whitespace-nowrap font-semibold text-lg border-2 border-[#BCD0E5] rounded-md cursor-pointer hover:border-[#02897A] hover:text-[#02897A] duration-200 active:scale-90;
+  }
+  .primary-button-white {
+    @apply px-8 py-2 whitespace-nowrap font-semibold text-lg  rounded-md cursor-pointer border-[#02897A]  border-2   transition-all duration-200 active:scale-90
+     bg-white text-primary  hover:bg-primary hover:text-white hover:border-white;
+  }
+  .nav-item {
+    @apply cursor-pointer px-4 hover:font-semibold hover:scale-105 transition transform active:scale-90;
+  }
+  .container {
+    @apply max-w-7xl m-auto px-8 sm:px-12;
+  }
+  .icon-button {
+    @apply hover:scale-125 active:scale-95 cursor-pointer duration-200;
+  }
+  .i {
+    @apply mt-0.5;
+  }
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+  
+  
+
+ 
