@@ -9,11 +9,11 @@ const db = await mysql.createConnection({
   user: process.env.DB_USER,
   password: process.env.PASSWORD,
   database: process.env.DATABASE_NAME,
+})
+.catch((err) => {
+  console.error("Error connecting to the database:", err);
 });
-// .catch((err) => {
-//   console.error("Error connecting to the database:", err);
-// });
 
-// console.log("connected to the database");
+console.log("connected to the database");
 
 export default db;
