@@ -52,7 +52,7 @@ const generateUserName = async (email) => {
 
 // example 1
 
-server.get("/user-info", async (req, res) => {
+server.post("/user-info", async (req, res) => {
   let { username, email } = req.body;
   // let email = "";
   // let username = "jibran";
