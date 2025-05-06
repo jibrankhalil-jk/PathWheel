@@ -1,12 +1,25 @@
 @import "@flaticon/flaticon-uicons/css/all/all";
 @import "tailwindcss";
 
-
 @theme {
   --color-primary: #02897a;
   --color-text: #22343d;
 
   --shadow-borderShadow: 0px 2px 8px rgba(0, 0, 0, 0.25);
+
+  --color-white: #ffffff;
+  --color-black: #242424;
+  --color-grey: #f3f3f3;
+  --color-dark-grey: #6b6b6b;
+  --color-red: #ff4e4e;
+  --color-transparent: transparent;
+  --color-twitter: #1da1f2;
+  --color-purple: #8b46ff;
+
+  --my-opacity-80: 0.8;
+
+  --font-inter: "Inter", "sans-serif";
+  --font-gelasio: "Gelasio", "serif";
 }
 
 @layer components {
@@ -32,13 +45,39 @@
   .i {
     @apply mt-0.5;
   }
+  .input-box {
+    @apply w-[100%] rounded-md p-4 bg-grey pl-12 border border-grey focus:bg-transparent placeholder:text-black;
+  }
+  .input-icon {
+    @apply absolute left-4 top-1/2 -translate-y-1/2;
+  }
+
+  .link {
+    @apply text-dark-grey hover:text-black hover:bg-grey p-3 px-4 block opacity-75;
+  }
+
+  .hide {
+    @apply opacity-0 pointer-events-none duration-100;
+  }
+
+  .show {
+    @apply opacity-100 pointer-events-auto;
+  }
 }
 
 body {
   font-family: "Poppins", sans-serif;
 }
 
-  
-  
+@layer utilities {
+  .ce-block__content,
+  .ce-toolbar__content {
+    max-width: 900px;
+  }
 
- 
+  .cdx-settings-button[data-tune="withBorder"],
+  .cdx-settings-button[data-tune="withBackground"],
+  .cdx-settings-button[data-tune="stretched"] {
+    display: none;
+  }
+}
