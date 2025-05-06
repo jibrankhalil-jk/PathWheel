@@ -1,6 +1,6 @@
  
-GET http://localhost:3000/user-info
-Content-Type: application/json 
+# GET http://localhost:3000/user-info
+# Content-Type: application/json 
 
 
 # POST  http://localhost:3000/signup
@@ -13,5 +13,19 @@ Content-Type: application/json
 # }
 
 
+
   
+POST  http://localhost:3000/save-location
+Content-Type: application/json 
+
+{
+      "uid" : "kh4kh43uh34hkrh34", 
+      "timeOfFlight" : "2023-10-01T12:00:00Z",
+      "hc" : "123456",
+      "latitude" : "23.32342432",
+      "longitude" : "23.32342432",
+      "bearning" : "23.32342432",
+      "direction" : "23.32342432", 
+      "datetime" : "2023-10-01T12:00:00Z"
+}
  
