@@ -119,6 +119,8 @@ server.post("/signup", (req, res) => {
         ]
       }`;
 
+      
+
       let query = `INSERT INTO users (name, email, password,profile_img) VALUES ("${fullname}", "${email}", "${hashed_password}" , "${profile_img}")`;
 
       console.log(query);
@@ -286,6 +288,125 @@ server.post("/get-wheelchairs", (req, res) => {
     .catch((err) => {
       return res.status(500).json({ error: err.message });
     });
+});
+
+server.post("/checkout", async (req, res) => {
+  let { email, items, total_amount } = req.body;
+  console.log("items", items);
+  console.log("total_amount", total_amount);
+  console.log("email", email);
+
+  if (
+    !email ||
+    !items ||
+    !total_amount ||
+    !Array.isArray(items) ||
+    items.length === 0
+  ) {
+    return res.status(403).json({ error: "Invalid order data provided" });
+  }
+
+  try {
+    // Begin transaction
+    await db.query("START TRANSACTION");
+
+    // Get the uid from user table using email
+    const userQuery = `SELECT uid FROM users WHERE email = "${email}" LIMIT 1`;
+    const userResult = await db.query(userQuery);
+
+    console.log("uid", userResult);
+
+    if (!userResult[0].length) {
+      await db.query("ROLLBACK");
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const uid = userResult[0][0].uid;
+
+    // Create the order record
+    const orderQuery = `INSERT INTO orders (uid, total_amount) VALUES ("${uid}", ${total_amount})`;
+    const orderResult = await db.query(orderQuery);
+
+    const orderId = orderResult[0].insertId;
+
+    // Insert order details for each wheelchair item
+    for (const item of items) {
+      const { wid, quantity, price } = item;
+      if (!wid || !quantity || !price) {
+        await db.query("ROLLBACK");
+        return res.status(403).json({ error: "Invalid item data" });
+      }
+
+      const detailsQuery = `INSERT INTO order_details (oid, wid, quantity, price) VALUES (${orderId}, ${wid}, ${quantity}, ${price})`;
+      await db.query(detailsQuery);
+    }
+
+    // Commit transaction
+    await db.query("COMMIT");
+
+    return res.status(200).json({
+      status: "Order created successfully",
+      order_id: orderId,
+    });
+  } catch (err) {
+    // Rollback transaction in case of error
+    await db.query("ROLLBACK");
+    console.log("Error during checkout:", err);
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+server.post("/get-orders", async (req, res) => {
+  let { email } = req.body;
+
+  console.log("email", email);
+
+  if (!email) {
+    return res.status(403).json({ error: "Email is required" });
+  }
+
+  try {
+    // Get the uid from user table using email
+
+    const userQuery = `SELECT uid FROM users WHERE email = "${email}" LIMIT 1`;
+    const userResult = await db.query(userQuery);
+
+    if (!userResult[0].length) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const uid = userResult[0][0].uid;
+
+    // Get orders for the user
+    const ordersQuery = `SELECT * FROM orders WHERE uid = "${uid}" ORDER BY created_at DESC`;
+    const ordersResult = await db.query(ordersQuery);
+
+    console.log("ordersResult", ordersResult);
+
+    return res.status(200).json({ orders: ordersResult[0] });
+  } catch (err) {
+    console.log("Error fetching orders:", err);
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+
+server.post("/get-order-details", async (req, res) => {
+  let { order_id } = req.body;
+
+  if (!order_id) {
+    return res.status(403).json({ error: "Order ID is required" });
+  }
+
+  try {
+    // Get order details for the given order ID
+    const detailsQuery = `SELECT * FROM order_details WHERE oid = ${order_id}`;
+    const detailsResult = await db.query(detailsQuery);
+
+    return res.status(200).json({ order_details: detailsResult[0] });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
 });
 
 // ------------------------------------------------------------------------------------------------
